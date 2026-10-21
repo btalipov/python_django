@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Shop{% endblock %}</title>
+</head>
+<body>
+<header>
+    <a href="{% url 'shopapp:index' %}">Shop</a>
+</header>
+
+<main>
+    {% block body %}{% endblock %}
+</main>
+
+<footer>
+    <p>{% now "d.m.Y H:i" %}</p>
+</footer>
+</body>
+</html>
