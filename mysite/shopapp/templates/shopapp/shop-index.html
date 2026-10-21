@@ -1,0 +1,26 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+    Shop Index
+{% endblock %}
+
+{% block body %}
+    <h1>{{ "hello shop index!"|title }}</h1>
+
+    <p>Количество товаров: {{ products|length }}</p>
+
+    <ul>
+        {% for name, price in products %}
+            <li>
+                {{ name|upper }} — ${{ price|floatformat:2 }}
+                {% if price > 1000 %}
+                    <strong>(premium)</strong>
+                {% endif %}
+            </li>
+        {% empty %}
+            <li>Товаров нет</li>
+        {% endfor %}
+    </ul>
+
+    <p>Time running: {{ time_running|floatformat:3 }}</p>
+{% endblock %}
