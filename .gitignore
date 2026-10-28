@@ -132,3 +132,6 @@ dmypy.json
 
 # Jetbrains Intellij IDEA
 .idea/
+
+# User uploaded files
+mysite/uploads/
