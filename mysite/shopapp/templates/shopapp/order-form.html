@@ -1,0 +1,21 @@
+{% extends "shopapp/base.html" %}
+
+{% block title %}
+    {% if object %}Update order #{{ object.pk }}{% else %}Create order{% endif %}
+{% endblock %}
+
+{% block body %}
+    <h1>{% if object %}Update order #{{ object.pk }}{% else %}Create a new order{% endif %}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% if object %}Update{% else %}Create{% endif %}</button>
+    </form>
+
+    {% if object %}
+        <p><a href="{% url 'shopapp:order_details' pk=object.pk %}">Back to order</a></p>
+    {% else %}
+        <p><a href="{% url 'shopapp:orders_list' %}">Back to orders list</a></p>
+    {% endif %}
+{% endblock %}
