@@ -45,3 +45,13 @@ class ThrottlingMiddlewareTestCase(TestCase):
         url = reverse("shopapp:index")
         self.assertEqual(client.get(url, REMOTE_ADDR="10.0.0.1").status_code, 200)
         self.assertEqual(client.get(url, REMOTE_ADDR="10.0.0.2").status_code, 200)
+
+    def test_page_after_form_redirect_is_not_throttled(self):
+        client = Client()
+        data = {"name": "Phone", "price": "999", "description": "", "discount": 0}
+        response = client.post(reverse("shopapp:create_product"), data, follow=True)
+        self.assertEqual(response.redirect_chain[0][1], 302)
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Phone")
+        # The page opened after the redirect counts, so throttling goes on as usual.
+        self.assertEqual(client.get(reverse("shopapp:index")).status_code, 429)
